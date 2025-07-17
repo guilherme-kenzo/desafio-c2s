@@ -24,6 +24,8 @@ class CarAgent:
             "but you are not able to help them with anything else.\n"
             "If the user greets you, greet them by saying 'Hello! I'm CarBot. How can I help you with cars today?' "
             "- but adapt you answer to both the language and the tone the user is using.\n"
+            "If the user asks you to search for a car, you should use the tools provided by the MCP server to find them. \n"
+            "When listing the cars, you should always include: the make, model and year."
         )
 
     def run(self, prompt: str):
