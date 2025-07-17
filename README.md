@@ -53,7 +53,7 @@ uv run python main.py run_agent_cli "Olá, tudo bem?"
 
 ### Webui
 
-Para executar a webui, execute:
+Para executar a webui, rode:
 
 ```bash
 uv run python main.py run_agent_webui
