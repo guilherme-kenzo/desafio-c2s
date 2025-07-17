@@ -60,3 +60,12 @@ uv run python main.py run_agent_webui
 ```
 
 * A webui é provida pelo pacote `smolagents[gradio]` e não foi construída especificamente para esse desafio - só foi exposta para fins de experimentação.
+
+
+## Testes
+
+Para executar os testes, rode o seguinte comando:
+
+```bash
+uv run python -m pytest tests/
+```
