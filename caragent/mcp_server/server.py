@@ -1,11 +1,12 @@
 from mcp.server.fastmcp import FastMCP
+from ..settings import MCP_HOST, MCP_PORT
 
 
 mcp = FastMCP(
     name="car-mcp-server",
     version="1.0.0",
-    host="127.0.0.1",
-    port=8888
+    host=MCP_HOST,
+    port=MCP_PORT
 )
 
 

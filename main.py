@@ -1,5 +1,3 @@
-from faker import Faker
-from faker_vehicle import VehicleProvider
 from fire import Fire
 
 import random
@@ -10,6 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 def _generate_fake_vehicle_data(num_vehicles: int):
+    from faker import Faker
+    from faker_vehicle import VehicleProvider
     fake = Faker()
     fake.add_provider(VehicleProvider)
     vehicles = []
@@ -34,16 +34,14 @@ def _generate_fake_vehicle_data(num_vehicles: int):
 
 
 class CLI:
-    def populate_db(self, db_path: str):
+    def populate_db(self):
         from caragent.database import create_database
         from sqlalchemy.orm import sessionmaker
         from caragent.database import Car
-        if db_path.startswith("sqlite://"):
-            engine_url = db_path
-        else:
-            engine_url = f"sqlite:///{db_path}"
-        engine = create_database(engine_url)
-        logger.info(f"Database created at {db_path} with engine {engine}")
+        from caragent.settings import DB_CONNECTION_STRING
+
+        engine = create_database(DB_CONNECTION_STRING)
+        logger.info(f"Database created at {DB_CONNECTION_STRING} with engine {engine}")
         Session = sessionmaker(bind=engine)
         with Session() as session:
             vehicles = _generate_fake_vehicle_data(200)
@@ -56,7 +54,7 @@ class CLI:
         logger.info("Starting MCP server.")
         mcp.run(transport="streamable-http")
 
-    def run_agent_cli(self, interactive: bool = False, prompt: str = None):
+    def run_agent_cli(self, interactive: bool = False, prompt: str | None = None):
         from caragent.agent import CarAgent
         from caragent.tui import ChatTUI
         if interactive:

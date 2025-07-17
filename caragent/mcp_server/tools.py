@@ -2,6 +2,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import and_
 
 from .server import mcp
+from ..settings import DB_CONNECTION_STRING
 from ..database import Car, create_database
 
 
@@ -59,7 +60,7 @@ def query_car_database(
     Returns: String. A formatted string of the database response.
     """
     filters = [_format_argument(arg, value) for arg, value in locals().items() if value]
-    engine = create_database(engine_url="sqlite:///cars.db")
+    engine = create_database(engine_url=DB_CONNECTION_STRING)
     Session = sessionmaker(engine)
     with Session() as session:
         query = session.query(Car)
