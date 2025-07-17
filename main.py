@@ -35,6 +35,7 @@ def _generate_fake_vehicle_data(num_vehicles: int):
 
 class CLI:
     def populate_db(self):
+        """Populates the database with fake vehicle data."""
         from caragent.database import create_database
         from sqlalchemy.orm import sessionmaker
         from caragent.database import Car
@@ -50,6 +51,7 @@ class CLI:
             logger.info(f"Populated database with {len(vehicles)} fake vehicles.")
 
     def run_mcp(self):
+        """Runs the MCP server."""
         from caragent.mcp_server import mcp
         logger.info("Starting MCP server.")
         mcp.run(transport="streamable-http")
@@ -62,6 +64,7 @@ class CLI:
             print(f"Bot: {response}")
 
     def run_agent_tui(self):
+        """Runs the TUI for the car agent."""
         from caragent.agent import CarAgent
         from caragent.tui import ChatTUI
         with CarAgent() as car_agent:
@@ -69,6 +72,7 @@ class CLI:
             tui.run()
 
     def run_agent_webui(self):
+        """Runs the web interface for the car agent."""
         from caragent.agent import CarAgent
         with CarAgent() as car_agent:
             car_agent.run_webui()
