@@ -22,12 +22,12 @@ def _generate_fake_vehicle_data(num_vehicles: int):
             "year": vehicle_obj["Year"],
             "fuel": fuel,
             "doors": random.choice([2, 4]),
-            "milage": random.randint(1000, 200000),
+            "milage": random.randint(1000, 400000),
             "transmission": random.choice(["Manual", "Automatic"]),
             "size_class": vehicle_obj['Category'],
             "engine_displacement": round(random.uniform(1.0, 5.0), 1) if fuel != "Electric" else 0.0,
             "cylinders": random.choice([4, 6, 8]) if fuel != "Electric" else 0,
-            "additional_info": f"This car has been owned by {random.randint(1, 4)} previous owners and has a unique history of {fake.sentence()}."
+            "additional_info": f"This car has been owned by {random.randint(1, 4)} previous owners." if random.choice([True, False]) else None
         }
         vehicles.append(vehicle)
     return vehicles

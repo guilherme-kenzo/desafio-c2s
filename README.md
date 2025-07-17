@@ -48,7 +48,7 @@ uv run python main.py run_agent_tui
 Para utilizar o agent via CLI, execute (alterando o argumento para sua pergunta):
 
 ```bash
-uv run python main.py run_agent_cli "insira sua pergunta aqui..."
+uv run python main.py run_agent_cli "Olá, tudo bem?"
 ```
 
 ### Webui
@@ -56,5 +56,7 @@ uv run python main.py run_agent_cli "insira sua pergunta aqui..."
 Para executar a webui, execute:
 
 ```bash
-uv run python main.py run_webui
+uv run python main.py run_agent_webui
 ```
+
+* A webui é provida pelo pacote `smolagents[gradio]` e não foi construída especificamente para esse desafio - só foi exposta para fins de experimentação.
