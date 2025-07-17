@@ -5,7 +5,7 @@ from fire import Fire
 import random
 import logging
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 
@@ -32,8 +32,8 @@ def _generate_fake_vehicle_data(num_vehicles: int):
         vehicles.append(vehicle)
     return vehicles
 
-class CLI:
 
+class CLI:
     def populate_db(self, db_path: str):
         from caragent.database import create_database
         from sqlalchemy.orm import sessionmaker
@@ -56,19 +56,27 @@ class CLI:
         logger.info("Starting MCP server.")
         mcp.run(transport="streamable-http")
 
-    def run_agent_cli(self):
+    def run_agent_cli(self, interactive: bool = False, prompt: str = None):
         from caragent.agent import CarAgent
-        with CarAgent() as car_agent:
-            while True:
-                prompt = input("Insira sua pergunta: ")
-                print(f"User: {prompt}")
+        from caragent.tui import ChatTUI
+        if interactive:
+            with CarAgent() as car_agent:
+                while True:
+                    tui = ChatTUI(car_agent)
+                    tui.run()
+        elif prompt:
+            with CarAgent() as car_agent:
                 response = car_agent.run(prompt)
                 print(f"Bot: {response}")
+        else:
+            raise ValueError("Either 'interactive' must be True or 'prompt' must be provided.")
 
     def run_agent_webui(self):
         from caragent.agent import CarAgent
         with CarAgent() as car_agent:
             car_agent.run_webui()
+
+
 
 if __name__ == "__main__":
     Fire(CLI)
