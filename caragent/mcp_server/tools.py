@@ -16,7 +16,7 @@ def _format_argument(arg: str, value: str | int | float | list[str|int]):
         return getattr(Car, arg[:-9]).contains(value)
     else:
         db_field = getattr(Car, arg)
-        return db_field.in_(value) if isinstance(Car, arg) else db_field == value
+        return db_field.in_(value) if isinstance(value, list) else db_field == value
 
 @mcp.tool()
 def query_car_database(
@@ -59,11 +59,11 @@ def query_car_database(
     Returns: String. A formatted string of the database response.
     """
     filters = [_format_argument(arg, value) for arg, value in locals().items() if value]
-    engine = create_database(engine_url="cars.db")
+    engine = create_database(engine_url="sqlite:///cars.db")
     Session = sessionmaker(engine)
     with Session() as session:
         query = session.query(Car)
-        query.filter(and_(*filters))
+        query = query.filter(and_(*filters))
         results = query.all()
     if not results:
         return "No cars found with the given filters."

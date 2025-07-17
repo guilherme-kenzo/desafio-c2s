@@ -51,5 +51,24 @@ class CLI:
             session.commit()
             logger.info(f"Populated database with {len(vehicles)} fake vehicles.")
 
+    def run_mcp(self):
+        from caragent.mcp_server import mcp
+        logger.info("Starting MCP server.")
+        mcp.run(transport="streamable-http")
+
+    def run_agent_cli(self):
+        from caragent.agent import CarAgent
+        with CarAgent() as car_agent:
+            while True:
+                prompt = input("Insira sua pergunta: ")
+                print(f"User: {prompt}")
+                response = car_agent.run(prompt)
+                print(f"Bot: {response}")
+
+    def run_agent_webui(self):
+        from caragent.agent import CarAgent
+        with CarAgent() as car_agent:
+            car_agent.run_webui()
+
 if __name__ == "__main__":
     Fire(CLI)

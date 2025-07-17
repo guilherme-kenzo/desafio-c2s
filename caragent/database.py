@@ -27,6 +27,6 @@ class Car(Base):
         return f"<Car(id={self.id}, make='{self.make}', model='{self.model}', year={self.year}, ...>"
     
 def create_database(engine_url: str):
-    engine = create_engine(engine_url)
+    engine = create_engine(engine_url, echo=True)
     Base.metadata.create_all(engine)
     return engine
