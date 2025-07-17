@@ -37,27 +37,27 @@ def query_car_database(
     cylinders_max: int | None = None,
     additional_info_contains: str | None = None,
 ) -> str:
-    """Queries the cars database with filters.
+    """Consulta o banco de dados de carros com filtros.
 
-    All arguments are filters that will be used when querying the database. Only arguments that are not None will be used.
+    Todos os argumentos são filtros que serão usados ao consultar o banco de dados. Apenas argumentos que não são None serão usados.
     Args:
-        make (str | list[str] | None, optional): The maker(s) of the car to be used as a filter. Defaults to None.
-        model (str | list[str] | None, optional): The model of the car to be used as a filter. Defaults to None.
-        year_min (int | None, optional): The minimum year. Defaults to None.
-        year_max (int | None, optional): The maximum year. Defaults to None.
-        fuel (str | list[str] | None, optional): The fuel type ("Gas", "Flex", "Diesel", "Etanol", "Electric" or "Hybrid"). Defaults to None.
-        doors (int | list[int] | None, optional): The quantity of doors. Defaults to None.
-        milage_min (int | None, optional): The minimum milage. Defaults to None.
-        milage_max (int | None, optional): The maximum milage. Defaults to None.
-        transmission (str | list[str] | None, optional): the transmission type ("Manual" or "Automatic"). Defaults to None.
-        size_class_contains (str | None, optional): The size class (Convertible, Van/Minivan, Coupe, SUV, Pickup, Sedan, Wagon or Hatchback). Defaults to None.
-        engine_displacement_min (float | None, optional): The minimum engine displacement. Defaults to None.
-        engine_displacement_max (float | None, optional): The maximum engine displacement. Defaults to None.
-        cylinders_min (int | None, optional): The minimum qt of cylinders. Defaults to None.
-        cylinders_max (int | None, optional): The maximum qt of cylinders. Defaults to None.
-        additional_info_contains (str | None, optional): Any additional information. Defaults to None.
+        make (str | list[str] | None, optional): O(s) fabricante(s) do carro a ser usado como filtro. Padrão é None.
+        model (str | list[str] | None, optional): O modelo do carro a ser usado como filtro. Padrão é None.
+        year_min (int | None, optional): O ano mínimo. Padrão é None.
+        year_max (int | None, optional): O ano máximo. Padrão é None.
+        fuel (str | list[str] | None, optional): O tipo de combustível ("Gas", "Flex", "Diesel", "Etanol", "Electric" ou "Hybrid"). Padrão é None.
+        doors (int | list[int] | None, optional): A quantidade de portas. Padrão é None.
+        milage_min (int | None, optional): A quilometragem mínima. Padrão é None.
+        milage_max (int | None, optional): A quilometragem máxima. Padrão é None.
+        transmission (str | list[str] | None, optional): O tipo de transmissão ("Manual" ou "Automatic"). Padrão é None.
+        size_class_contains (str | None, optional): A classe de tamanho (Convertible, Van/Minivan, Coupe, SUV, Pickup, Sedan, Wagon ou Hatchback). Padrão é None.
+        engine_displacement_min (float | None, optional): A cilindrada mínima do motor. Padrão é None.
+        engine_displacement_max (float | None, optional): A cilindrada máxima do motor. Padrão é None.
+        cylinders_min (int | None, optional): A quantidade mínima de cilindros. Padrão é None.
+        cylinders_max (int | None, optional): A quantidade máxima de cilindros. Padrão é None.
+        additional_info_contains (str | None, optional): Qualquer informação adicional. Padrão é None.
 
-    Returns: String. A formatted string of the database response.
+    Returns: String. Uma string formatada da resposta do banco de dados.
     """
     filters = [_format_argument(arg, value) for arg, value in locals().items() if value]
     engine = create_database(engine_url=DB_CONNECTION_STRING)
@@ -72,13 +72,13 @@ def query_car_database(
     output = ""
     for car in results:
         output += f"### {car.make} - {car.model} - {car.year}\n\n"
-        output += f"Milage: {car.milage}\n"
-        output += f"Transmission: {car.transmission}\n"
-        output += f"Doors: {car.doors}\n"
-        output += f"Engine: {car.engine_displacement} liters\n"
-        output += f"Cylinders: {car.cylinders}\n"
+        output += f"Milhagem: {car.milage}\n"
+        output += f"Transmissão: {car.transmission}\n"
+        output += f"Portas: {car.doors}\n"
+        output += f"Motor: {car.engine_displacement} litros\n"
+        output += f"Cilindros: {car.cylinders}\n"
         if car.additional_info:
-            output += f"Additional Information: {car.additional_info}\n"
+            output += f"Informações Adicionais: {car.additional_info}\n"
         output += "\n"
 
     return output
