@@ -54,20 +54,19 @@ class CLI:
         logger.info("Starting MCP server.")
         mcp.run(transport="streamable-http")
 
-    def run_agent_cli(self, interactive: bool = False, prompt: str | None = None):
+    def run_agent_cli(self, prompt: str | None = None):
         from caragent.agent import CarAgent
         from caragent.tui import ChatTUI
-        if interactive:
-            with CarAgent() as car_agent:
-                while True:
-                    tui = ChatTUI(car_agent)
-                    tui.run()
-        elif prompt:
-            with CarAgent() as car_agent:
-                response = car_agent.run(prompt)
-                print(f"Bot: {response}")
-        else:
-            raise ValueError("Either 'interactive' must be True or 'prompt' must be provided.")
+        with CarAgent() as car_agent:
+            response = car_agent.run(prompt)
+            print(f"Bot: {response}")
+
+    def run_agent_tui(self):
+        from caragent.agent import CarAgent
+        from caragent.tui import ChatTUI
+        with CarAgent() as car_agent:
+            tui = ChatTUI(car_agent)
+            tui.run()
 
     def run_agent_webui(self):
         from caragent.agent import CarAgent
